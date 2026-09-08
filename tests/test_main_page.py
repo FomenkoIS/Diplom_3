@@ -8,12 +8,13 @@ class TestMainPage:
 
     @allure.title('Переход по клику на Конструктор')
     @allure.description('Переход в Конструктор по клику по кнопке Конструктор')
-    def test_constructor_button__click(self, order_page):
+    def test_constructor_button__click(self, order_page, main_page):
 
         order_page.open()
-        order_page.click_constructor_button()
+        main_page.click_constructor_button()
+        main_page.wait_constructor_button_clickable()
 
-        assert order_page.get_text_from_element(MainLocators.MAIN_HEADER) == 'Соберите бургер'
+        assert main_page.get_text_from_element(MainLocators.MAIN_HEADER) == 'Соберите бургер'
 
 
     @allure.title('Переход по клику в раздел Лента заказов')
@@ -21,7 +22,7 @@ class TestMainPage:
     def test_list_orders_button__click(self, main_page):
 
         main_page.open()
-        main_page.click_bottom_order_button()
+        main_page.click_list_orders_button()
 
         assert main_page.get_text_from_element(OrderLocators.ORDER_HEADER) == 'Лента заказов'
 
@@ -67,7 +68,7 @@ class TestMainPage:
         main_page.click_first_buns()
         main_page.click_close_ingredient_popup_button()
 
-        assert not main_page._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
+        assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
 
 
     @allure.title('Всплывающее окно с информацией о соусе закрывается кликом по крестику')
@@ -79,7 +80,7 @@ class TestMainPage:
         main_page.click_first_sauces()
         main_page.click_close_ingredient_popup_button()
 
-        assert not main_page._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
+        assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
 
 
 
@@ -92,7 +93,7 @@ class TestMainPage:
         main_page.click_first_fillings()
         main_page.click_close_ingredient_popup_button()
 
-        assert not main_page._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
+        assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
 
 
     @allure.title('Добавление булки в бургер увеличивает счетчик')

@@ -3,8 +3,8 @@ from pages.base_page import BasePage
 from url import MAIN_URL
 from locators.main_page_locators import MainLocators
 from selenium.webdriver.common.action_chains import ActionChains
-
-
+from data import UserForLogin
+import time
 
 class MainPage(BasePage):
     URL = MAIN_URL
@@ -13,7 +13,9 @@ class MainPage(BasePage):
     def click_constructor_button(self):
         self.click_element(MainLocators.CONSTRUCTOR_BUTTON)
 
-
+    @allure.step('Ожидаем, что кнопка Конструктор станет кликабельной')
+    def wait_constructor_button_clickable(self):
+        self._wait_for_element_to_be_clickable(MainLocators.CONSTRUCTOR_BUTTON)
 
     @allure.step('Клик по кнопке Лента заказов в шапке')
     def click_list_orders_button(self):
@@ -22,11 +24,13 @@ class MainPage(BasePage):
 
 
 
+    
+
+
     @allure.step('Клик по кнопке Личный кабинет в шапке')
     def click_personal_account_button(self):
 
         self.click_element(MainLocators.PERSONAL_ACCOUNT_BUTTON)
-
 
 
     @allure.step('Клик по кнопке Соусы и переход на вкладку Соусы в конструкторе')
@@ -67,7 +71,7 @@ class MainPage(BasePage):
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER)
 
     @allure.step('Клик по крестику попапа с информацией об ингредиенте')
-    def click_close_ingreient_popup_button(self):
+    def click_close_ingredient_popup_button(self):
 
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_CLOSE_BUTTON)
         self.click_element(MainLocators.INGREDIENT_POPUP_CLOSE_BUTTON)
@@ -81,6 +85,8 @@ class MainPage(BasePage):
         target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
         
         ActionChains(self.driver).drag_and_drop(bun, target).perform()
+        time.sleep(3)
+
 
     @allure.step('Добавляем соус в бургер')
     def add_sauce_to_burger(self):
@@ -89,6 +95,8 @@ class MainPage(BasePage):
         target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
         
         ActionChains(self.driver).drag_and_drop(sauce, target).perform()
+        time.sleep(3)
+
 
     @allure.step('Добавляем начинку в бургер')
     def add_filling_to_burger(self):
@@ -97,7 +105,7 @@ class MainPage(BasePage):
         target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
         
         ActionChains(self.driver).drag_and_drop(filling, target).perform()
-
+        time.sleep(3)
 
     @allure.step('Получение значения счетчика ингредиента')
     def get_counter_value(self, counter_locator):
@@ -106,7 +114,7 @@ class MainPage(BasePage):
         return int(counter_element.text)
 
 
-    @allure.step('Авторизация под известным пользоввателем')
+    @allure.step('Создание заказа и получение его номера')
     def create_order_and_get_number(self):
 
         self.click_constructor_button()
@@ -128,12 +136,12 @@ class MainPage(BasePage):
         return current_order_number
 
 
-    @allure.step('Авторизация под известным пользоввателем')
-    def login(self):
+    @allure.step('Авторизация под известным пользователем')
+    def login(self, email=UserForLogin.LOGIN_EMAIL, password=UserForLogin.LOGIN_PASSWORD):
 
         self.click_element(MainLocators.PERSONAL_ACCOUNT_BUTTON)
         self._wait_for_element(MainLocators.LOGIN_HEADER)
-        self.send_keys_to_element(MainLocators.EMAIL_FIELD)
-        self.send_keys_to_element(MainLocators.PASSWORD_FIEL)
+        self.send_keys_to_element(MainLocators.EMAIL_FIELD, email)
+        self.send_keys_to_element(MainLocators.PASSWORD_FIELD, password)
         self.click_element(MainLocators.ENTER_BUTTON)
         self._wait_for_element(MainLocators.MAIN_HEADER)        

@@ -18,7 +18,10 @@ class BasePage:
     def open(self):
         self.driver.get(self.URL)
 
-   
+
+    @allure.step('Поиск элемента с локатором {locator}')
+    def find_element(self, locator, timeout=TIMEOUT):
+        return self._wait_for_element(locator, timeout)
 
     @allure.step('Ожидание видимости элемента с локатором {locator}')
     def _wait_for_element(self, locator, timeout=TIMEOUT):
@@ -62,6 +65,15 @@ class BasePage:
                 EC.visibility_of_element_located(locator)
             )
             return True
+        except:
+            return False
+
+    @allure.step('Проверка отображения элемента с локатором {locator}')
+    def is_element_displayed(self, locator, timeout=TIMEOUT):
+
+        try:
+            element = self._wait_for_element(locator, timeout)
+            return element.is_displayed()
         except:
             return False
 
