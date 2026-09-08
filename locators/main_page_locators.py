@@ -36,9 +36,15 @@ class MainLocators:
     LOG_IN_BUTTON = (By.XPATH, "//button[text()='Войти в аккаунт']")
 
     ORDER_BUTTON = (By.XPATH, "//button[text()='Оформить заказ']")
-    ORDER_POPUP_HEAER = (By.XPATH, "//div[contains(@class, 'Modal_modal__container')]//h2")
+    ORDER_POPUP_ORDER_NUMBER = (By.XPATH, "//div[contains(@class, 'Modal_modal__container')]//h2")
     ORDER_POPUP_TEXT = (By.XPATH, "//div/p[contains(text(), 'идентификатор заказа')]")
     ORDER_POPUP_CLOSE_BUTTON = (By.XPATH, "//section[contains(@class, 'Modal_modal_opened')]//button")
 
 
     CONSTRUCTOR_OF_BURGER = (By.XPATH, "//section[contains(@class, 'BurgerConstructor_basket')]")
+
+
+    LOGIN_HEADER = (By.XPATH, "//h2[text()='Вход']")
+    EMAIL_FIELD = (By.XPATH, "//input[@name='name']")
+    PASSWORD_FIEL = (By.XPATH, "//input[@type='password']")
+    ENTER_BUTTON = (By.XPATH, "//button[text()='Войти']")

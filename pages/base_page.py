@@ -54,7 +54,16 @@ class BasePage:
         self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
         return element
 
+    @allure.step('Ожидание исчезновения элемента с локатором {locator}')
+    def _wait_for_element_disappear(self, locator, timeout=TIMEOUT):
 
+        try:
+            WebDriverWait(self.driver, timeout).until_not(
+                EC.visibility_of_element_located(locator)
+            )
+            return True
+        except:
+            return False
 
 
 

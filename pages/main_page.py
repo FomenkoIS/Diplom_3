@@ -104,3 +104,36 @@ class MainPage(BasePage):
         
         counter_element = self.find_element(counter_locator)
         return int(counter_element.text)
+
+
+    @allure.step('Авторизация под известным пользоввателем')
+    def create_order_and_get_number(self):
+
+        self.click_constructor_button()
+        self._wait_for_element(MainLocators.MAIN_HEADER)
+        self.add_bun_to_burger()
+
+        self.click_element(MainLocators.SAUCES_BUTTON)
+        self._wait_for_element(MainLocators.SAUCES_HEADER)
+        self.add_sauce_to_burger()
+
+        self.click_element(MainLocators.FILLINGS_BUTTON)
+        self._wait_for_element(MainLocators.FILLINGS_HEADER)
+        self.add_filling_to_burger()
+
+        self.click_element(MainLocators.ORDER_BUTTON)
+        self._wait_for_element(MainLocators.ORDER_POPUP_ORDER_NUMBER)
+        current_order_number = int(self.get_text_from_element(MainLocators.ORDER_POPUP_ORDER_NUMBER))
+        self.click_element(MainLocators.ORDER_POPUP_CLOSE_BUTTON)
+        return current_order_number
+
+
+    @allure.step('Авторизация под известным пользоввателем')
+    def login(self):
+
+        self.click_element(MainLocators.PERSONAL_ACCOUNT_BUTTON)
+        self._wait_for_element(MainLocators.LOGIN_HEADER)
+        self.send_keys_to_element(MainLocators.EMAIL_FIELD)
+        self.send_keys_to_element(MainLocators.PASSWORD_FIEL)
+        self.click_element(MainLocators.ENTER_BUTTON)
+        self._wait_for_element(MainLocators.MAIN_HEADER)        
