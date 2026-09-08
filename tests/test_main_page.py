@@ -97,4 +97,41 @@ class TestMainPage:
         assert not main_page._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
 
 
+    @allure.title('Добавление булки в бургер увеличивает счетчик')
+    @allure.description('При перетаскивании булки в конструктор счетчик увеличивается')
+    def test_add_bun_increase_counter(self, main_page):
+
+        main_page.open()
+        initial_counter = main_page.get_counter_value(MainLocators.FIRST_BUNS_COUNTER)
+        main_page.add_bun_to_burger()
+        new_counter = main_page.get_counter_value(MainLocators.FIRST_BUNS_COUNTER)
+        
+        assert new_counter == initial_counter + 2, "Счетчик не увеличился"
+
+
+    @allure.title('Добавление соуса в бургер увеличивает счетчик')
+    @allure.description('При перетаскивании соуса в конструктор счетчик увеличивается')
+    def test_add_sauce_increase_counter(self, main_page):
+
+        main_page.open()
+        main_page.click_sauces_button()
+        initial_counter = main_page.get_counter_value(MainLocators.FIRST_SAUCES_COUNTER)
+        main_page.add_sauce_to_burger()
+        new_counter = main_page.get_counter_value(MainLocators.FIRST_SAUCES_COUNTER)
+        
+        assert new_counter == initial_counter + 1, "Счетчик не увеличился"
+
+
+    @allure.title('Добавление начинки в бургер увеличивает счетчик')
+    @allure.description('При перетаскивании начинки в конструктор счетчик увеличивается')
+    def test_add_filling_increase_counter(self, main_page):
+
+        main_page.open()
+        main_page.click_fillings_button()
+        initial_counter = main_page.get_counter_value(MainLocators.FIRST_FILLINGS_COUNTER)
+        main_page.add_filling_to_burger()
+        new_counter = main_page.get_counter_value(MainLocators.FIRST_FILLINGS_COUNTER)
+        
+        assert new_counter == initial_counter + 1, "Счетчик не увеличился"
+
 

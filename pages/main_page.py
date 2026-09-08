@@ -2,6 +2,9 @@ import allure
 from pages.base_page import BasePage
 from url import MAIN_URL
 from locators.main_page_locators import MainLocators
+from selenium.webdriver.common.action_chains import ActionChains
+
+
 
 class MainPage(BasePage):
     URL = MAIN_URL
@@ -63,9 +66,41 @@ class MainPage(BasePage):
         self.click_element(MainLocators.FIRST_FILLINGS_INGREDIENT)
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER)
 
-    @allure.step('Клик по крестику попапа с информацией об ингридиенте')
+    @allure.step('Клик по крестику попапа с информацией об ингредиенте')
     def click_close_ingreient_popup_button(self):
 
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_CLOSE_BUTTON)
         self.click_element(MainLocators.INGREDIENT_POPUP_CLOSE_BUTTON)
-       
+
+
+
+    @allure.step('Добавляем булку в бургер')
+    def add_bun_to_burger(self):
+
+        bun = self.find_element(MainLocators.FIRST_BUNS_INGREDIENT)
+        target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
+        
+        ActionChains(self.driver).drag_and_drop(bun, target).perform()
+
+    @allure.step('Добавляем соус в бургер')
+    def add_sauce_to_burger(self):
+
+        sauce = self.find_element(MainLocators.FIRST_SAUCES_INGREDIENT)
+        target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
+        
+        ActionChains(self.driver).drag_and_drop(sauce, target).perform()
+
+    @allure.step('Добавляем начинку в бургер')
+    def add_filling_to_burger(self):
+        
+        filling = self.find_element(MainLocators.FIRST_FILLINGS_INGREDIENT)
+        target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
+        
+        ActionChains(self.driver).drag_and_drop(filling, target).perform()
+
+
+    @allure.step('Получение значения счетчика ингредиента')
+    def get_counter_value(self, counter_locator):
+        
+        counter_element = self.find_element(counter_locator)
+        return int(counter_element.text)
