@@ -17,7 +17,8 @@ class MainPage(BasePage):
 
     @allure.step('Клик по кнопке Лента заказов в шапке')
     def click_list_orders_button(self):
-
+        if self.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER, timeout=2):
+            self.click_close_ingredient_popup_button()
         self.click_element(MainLocators.LIST_ORDERS_BUTTON)
 
 
@@ -100,7 +101,7 @@ class MainPage(BasePage):
             MainLocators.FIRST_BUNS_INGREDIENT,
             MainLocators.CONSTRUCTOR_OF_BURGER
         )
-        time.sleep(2)
+        time.sleep(0.5)
 
 
     @allure.step('Добавляем соус в бургер')
@@ -111,7 +112,7 @@ class MainPage(BasePage):
             MainLocators.FIRST_SAUCES_INGREDIENT,
             MainLocators.CONSTRUCTOR_OF_BURGER
         )
-        time.sleep(2)
+        time.sleep(0.5)
 
 
     @allure.step('Добавляем начинку в бургер')
@@ -122,7 +123,7 @@ class MainPage(BasePage):
             MainLocators.FIRST_FILLINGS_INGREDIENT,
             MainLocators.CONSTRUCTOR_OF_BURGER
         )
-        time.sleep(2)
+        time.sleep(0.5)
 
     @allure.step('Получение значения счетчика ингредиента')
     def get_counter_value(self, counter_locator):
@@ -147,6 +148,7 @@ class MainPage(BasePage):
         self.add_filling_to_burger()
 
         self.click_element(MainLocators.ORDER_BUTTON)
+        self._wait_for_element_disappear(MainLocators.ORDER_9999_number)
         self._wait_for_element(MainLocators.ORDER_POPUP_ORDER_NUMBER)
         current_order_number = int(self.get_text_from_element(MainLocators.ORDER_POPUP_ORDER_NUMBER))
         self.click_element(MainLocators.ORDER_POPUP_CLOSE_BUTTON)

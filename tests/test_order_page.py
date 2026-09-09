@@ -1,7 +1,5 @@
 import allure
-from locators.main_page_locators import MainLocators
-from locators.order_page_locators import OrderLocators
-
+import time
 
 class TestOrderPage:
 
@@ -15,6 +13,7 @@ class TestOrderPage:
         initial_count = order_page.get_number_of_orders_for_all_time()
         
         main_page.click_constructor_button()
+        main_page.login()
         main_page.create_order_and_get_number()
 
         main_page.click_list_orders_button()
@@ -32,6 +31,7 @@ class TestOrderPage:
         initial_count = order_page.get_number_of_orders_for_today()
         
         main_page.click_constructor_button()
+        main_page.login()
         main_page.create_order_and_get_number()
         
         main_page.click_list_orders_button()
@@ -45,11 +45,13 @@ class TestOrderPage:
     def test_order_number_appear_in_at_work(self, main_page, order_page):
 
         main_page.open()
+        main_page.login()
 
         new_order_number = str(main_page.create_order_and_get_number())
         
         main_page.click_list_orders_button()
         order_page.wait_for_orders_ready_to_disappear()
+        time.sleep(5)
         order_number_in_at_work = order_page.get_number_of_order_at_work()
         
         assert new_order_number in order_number_in_at_work, 'Номера сделанного заказа нет в разделе В работе'

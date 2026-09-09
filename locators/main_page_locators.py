@@ -39,7 +39,7 @@ class MainLocators:
     ORDER_POPUP_ORDER_NUMBER = (By.XPATH, "//div[contains(@class, 'Modal_modal__container')]//h2")
     ORDER_POPUP_TEXT = (By.XPATH, "//div/p[contains(text(), 'идентификатор заказа')]")
     ORDER_POPUP_CLOSE_BUTTON = (By.XPATH, "//section[contains(@class, 'Modal_modal_opened')]//button")
-
+    ORDER_9999_number = (By.XPATH, "//h2[text()='9999']")
 
     CONSTRUCTOR_OF_BURGER = (By.XPATH, "//section[contains(@class, 'BurgerConstructor_basket')]")
 
