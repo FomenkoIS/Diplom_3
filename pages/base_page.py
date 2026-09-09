@@ -92,4 +92,46 @@ class BasePage:
             return False
 
 
-
+    @allure.step('Перетаскивание через JavaScript')
+    def drag_and_drop_js(self, source_locator, target_locator):
+        source = self.find_element(source_locator)
+        target = self.find_element(target_locator)
+        
+        script = """
+            function createEvent(type, clientX, clientY) {
+                var event = new MouseEvent(type, {
+                    view: window,
+                    bubbles: true,
+                    cancelable: true,
+                    clientX: clientX,
+                    clientY: clientY
+                });
+                return event;
+            }
+            
+            var source = arguments[0];
+            var target = arguments[1];
+            
+            var sourceRect = source.getBoundingClientRect();
+            var targetRect = target.getBoundingClientRect();
+            
+            var sourceX = sourceRect.left + sourceRect.width / 2;
+            var sourceY = sourceRect.top + sourceRect.height / 2;
+            var targetX = targetRect.left + targetRect.width / 2;
+            var targetY = targetRect.top + targetRect.height / 2;
+            
+            source.dispatchEvent(createEvent('mousedown', sourceX, sourceY));
+            source.dispatchEvent(createEvent('dragstart', sourceX, sourceY));
+            
+            document.dispatchEvent(createEvent('dragover', targetX, targetY));
+            document.dispatchEvent(createEvent('dragenter', targetX, targetY));
+            
+            target.dispatchEvent(createEvent('dragover', targetX, targetY));
+            target.dispatchEvent(createEvent('dragenter', targetX, targetY));
+            target.dispatchEvent(createEvent('drop', targetX, targetY));
+            
+            source.dispatchEvent(createEvent('dragend', targetX, targetY));
+            source.dispatchEvent(createEvent('mouseup', targetX, targetY));
+        """
+        self.driver.execute_script(script, source, target)
+        time.sleep(2)

@@ -45,6 +45,8 @@ class MainPage(BasePage):
     @allure.step('Клик по 1-ой булке в разделе Булки (открыть попап)')
     def click_first_buns_open(self):
 
+        if self.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER, timeout=2):
+            self.click_close_ingredient_popup_button()
         self.click_element(MainLocators.FIRST_BUNS_INGREDIENT)
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER)
 
@@ -93,56 +95,34 @@ class MainPage(BasePage):
     @allure.step('Добавляем булку в бургер')
     def add_bun_to_burger(self):
 
-        bun = self.find_element(MainLocators.FIRST_BUNS_INGREDIENT)
-        target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
-        
-        actions = ActionChains(self.driver)
-        actions.click_and_hold(bun)
-        actions.pause(1)
-        actions.move_to_element(target)
-        actions.pause(1)
-        actions.release()
-        actions.perform()
-        
-        time.sleep(3)
+        self.scroll_to_element(MainLocators.FIRST_BUNS_INGREDIENT)
+        super().drag_and_drop_js(
+            MainLocators.FIRST_BUNS_INGREDIENT,
+            MainLocators.CONSTRUCTOR_OF_BURGER
+        )
+        time.sleep(2)
 
 
     @allure.step('Добавляем соус в бургер')
     def add_sauce_to_burger(self):
 
         self.scroll_to_element(MainLocators.FIRST_SAUCES_INGREDIENT)
-
-        sauce = self.find_element(MainLocators.FIRST_SAUCES_INGREDIENT)
-        target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
-        
-        actions = ActionChains(self.driver)
-        actions.click_and_hold(sauce)
-        actions.pause(1)
-        actions.move_to_element(target)
-        actions.pause(1)
-        actions.release()
-        actions.perform()
-        
-        time.sleep(3)
+        super().drag_and_drop_js(
+            MainLocators.FIRST_SAUCES_INGREDIENT,
+            MainLocators.CONSTRUCTOR_OF_BURGER
+        )
+        time.sleep(2)
 
 
     @allure.step('Добавляем начинку в бургер')
     def add_filling_to_burger(self):
 
-
         self.scroll_to_element(MainLocators.FIRST_FILLINGS_INGREDIENT)
-        filling = self.find_element(MainLocators.FIRST_FILLINGS_INGREDIENT)
-        target = self.find_element(MainLocators.CONSTRUCTOR_OF_BURGER)
-        
-        actions = ActionChains(self.driver)
-        actions.click_and_hold(filling)
-        actions.pause(1)
-        actions.move_to_element(target)
-        actions.pause(1)
-        actions.release()
-        actions.perform()
-        
-        time.sleep(3)
+        super().drag_and_drop_js(
+            MainLocators.FIRST_FILLINGS_INGREDIENT,
+            MainLocators.CONSTRUCTOR_OF_BURGER
+        )
+        time.sleep(2)
 
     @allure.step('Получение значения счетчика ингредиента')
     def get_counter_value(self, counter_locator):
