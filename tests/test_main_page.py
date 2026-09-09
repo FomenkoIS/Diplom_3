@@ -8,11 +8,11 @@ class TestMainPage:
 
     @allure.title('Переход по клику на Конструктор')
     @allure.description('Переход в Конструктор по клику по кнопке Конструктор')
-    def test_constructor_button__click(self, order_page, main_page):
+    def test_constructor_button__click(self, main_page):
 
-        order_page.open()
+        main_page.open()
+        main_page.click_list_orders_button()
         main_page.click_constructor_button()
-        main_page.wait_constructor_button_clickable()
 
         assert main_page.get_text_from_element(MainLocators.MAIN_HEADER) == 'Соберите бургер'
 
@@ -27,35 +27,33 @@ class TestMainPage:
         assert main_page.get_text_from_element(OrderLocators.ORDER_HEADER) == 'Лента заказов'
 
 
-    @allure.title('Клик по ингридиенту из категории Булки, появление окна с деталями')
-    @allure.description('Появление всплывающего окна с деталями при клике по ингридиенту из категории Булки')
+    @allure.title('Клик по ингредиенту из категории Булки, появление окна с деталями')
+    @allure.description('Появление всплывающего окна с деталями при клике по ингредиенту из категории Булки')
     def test_buns_popup(self, main_page):
 
         main_page.open()
-        main_page.click_first_buns()
+        main_page.click_first_buns_open()
 
         assert main_page.get_text_from_element(MainLocators.INGREDIENT_POPUP_HEADER) == 'Детали ингредиента'
 
 
-    @allure.title('Клик по ингридиенту из категории Соусы, появление окна с деталями')
-    @allure.description('Появление всплывающего окна с деталями при клике по ингридиенту из категории Соусы')
+    @allure.title('Клик по ингредиенту из категории Соусы, появление окна с деталями')
+    @allure.description('Появление всплывающего окна с деталями при клике по ингредиенту из категории Соусы')
     def test_sauces_popup(self, main_page):
 
         main_page.open()
-        main_page.click_sauces_button()
-        main_page.click_first_sauces()
+        main_page.click_first_sauces_open()
 
         assert main_page.get_text_from_element(MainLocators.INGREDIENT_POPUP_HEADER) == 'Детали ингредиента'
 
 
 
-    @allure.title('Клик по ингридиенту из категории Начинки, появление окна с деталями')
-    @allure.description('Появление всплывающего окна с деталями при клике по ингридиенту из категории Начинки')
+    @allure.title('Клик по ингредиенту из категории Начинки, появление окна с деталями')
+    @allure.description('Появление всплывающего окна с деталями при клике по ингредиенту из категории Начинки')
     def test_fillings_popup(self, main_page):
 
         main_page.open()
-        main_page.click_fillings_button()
-        main_page.click_first_fillings()
+        main_page.click_first_fillings_open()
 
         assert main_page.get_text_from_element(MainLocators.INGREDIENT_POPUP_HEADER) == 'Детали ингредиента'
 
@@ -65,7 +63,7 @@ class TestMainPage:
     def test_close_buns_popup(self, main_page):
 
         main_page.open()
-        main_page.click_first_buns()
+        main_page.click_first_buns_open()
         main_page.click_close_ingredient_popup_button()
 
         assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
@@ -76,8 +74,7 @@ class TestMainPage:
     def test_close_sauces_popup(self, main_page):
 
         main_page.open()
-        main_page.click_sauces_button()
-        main_page.click_first_sauces()
+        main_page.click_first_sauces_open()
         main_page.click_close_ingredient_popup_button()
 
         assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
@@ -89,8 +86,7 @@ class TestMainPage:
     def test_close_fillings_popup(self, main_page):
 
         main_page.open()
-        main_page.click_fillings_button()
-        main_page.click_first_fillings()
+        main_page.click_first_fillings_open()
         main_page.click_close_ingredient_popup_button()
 
         assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"

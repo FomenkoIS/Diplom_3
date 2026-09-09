@@ -16,16 +16,16 @@ class MainLocators:
     INGREDIENT_POPUP_HEADER = (By.XPATH, "//h2[text() = 'Детали ингредиента']")
     INGREDIENT_POPUP_CLOSE_BUTTON = (By.XPATH, "//section[contains(@class, 'Modal_modal_opened')]//button")
 
-    FIRST_BUNS_INGREDIENT = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa6d']")
+    FIRST_BUNS_INGREDIENT = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa6d']//div[contains(@class, 'BurgerIngredient_ingredient')]")
     FIRST_BUNS_COUNTER = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa6d']//p[contains(@class, 'counter_counter')]")
     
 
 
-    FIRST_SAUCES_INGREDIENT = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa72']")
+    FIRST_SAUCES_INGREDIENT = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa72']//div[contains(@class, 'BurgerIngredient_ingredient')]")
     FIRST_SAUCES_COUNTER = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa72']//p[contains(@class, 'counter_counter')]")
 
 
-    FIRST_FILLINGS_INGREDIENT = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa6f']")
+    FIRST_FILLINGS_INGREDIENT = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa6f']//div[contains(@class, 'BurgerIngredient_ingredient')]")
     FIRST_FILLINGS_COUNTER = (By.XPATH, "//a[@href='/ingredient/61c0c5a71d1f82001bdaaa6f']//p[contains(@class, 'counter_counter')]")
 
 
@@ -46,5 +46,5 @@ class MainLocators:
 
     LOGIN_HEADER = (By.XPATH, "//h2[text()='Вход']")
     EMAIL_FIELD = (By.XPATH, "//input[@name='name']")
-    PASSWORD_FIEL = (By.XPATH, "//input[@type='password']")
+    PASSWORD_FIELD = (By.XPATH, "//input[@type='password']")
     ENTER_BUTTON = (By.XPATH, "//button[text()='Войти']")
