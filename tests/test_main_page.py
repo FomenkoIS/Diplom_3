@@ -1,6 +1,5 @@
 import allure
-from locators.main_page_locators import MainLocators
-from locators.order_page_locators import OrderLocators
+
 
 
 class TestMainPage:
@@ -8,13 +7,13 @@ class TestMainPage:
 
     @allure.title('Переход по клику на Конструктор')
     @allure.description('Переход в Конструктор по клику по кнопке Конструктор')
-    def test_constructor_button__click(self, main_page):
+    def test_constructor_button_click(self, main_page):
 
         main_page.open()
         main_page.click_list_orders_button()
         main_page.click_constructor_button()
-
-        assert main_page.get_text_from_element(MainLocators.MAIN_HEADER) == 'Соберите бургер'
+        main_header_text = main_page.get_main_header_text()
+        assert main_header_text == 'Соберите бургер'
 
 
     @allure.title('Переход по клику в раздел Лента заказов')
@@ -23,8 +22,8 @@ class TestMainPage:
 
         main_page.open()
         main_page.click_list_orders_button()
-
-        assert main_page.get_text_from_element(OrderLocators.ORDER_HEADER) == 'Лента заказов'
+        order_header_text = main_page.get_order_header_text()
+        assert order_header_text == 'Лента заказов'
 
 
     @allure.title('Клик по ингредиенту из категории Булки, появление окна с деталями')
@@ -33,8 +32,9 @@ class TestMainPage:
 
         main_page.open()
         main_page.click_first_buns_open()
+        ingredient_popup_header_text = main_page.get_ingredient_popup_header_text()
 
-        assert main_page.get_text_from_element(MainLocators.INGREDIENT_POPUP_HEADER) == 'Детали ингредиента'
+        assert ingredient_popup_header_text == 'Детали ингредиента'
 
 
     @allure.title('Клик по ингредиенту из категории Соусы, появление окна с деталями')
@@ -43,8 +43,9 @@ class TestMainPage:
 
         main_page.open()
         main_page.click_first_sauces_open()
+        ingredient_popup_header_text = main_page.get_ingredient_popup_header_text()
 
-        assert main_page.get_text_from_element(MainLocators.INGREDIENT_POPUP_HEADER) == 'Детали ингредиента'
+        assert ingredient_popup_header_text == 'Детали ингредиента'
 
 
 
@@ -54,8 +55,9 @@ class TestMainPage:
 
         main_page.open()
         main_page.click_first_fillings_open()
-
-        assert main_page.get_text_from_element(MainLocators.INGREDIENT_POPUP_HEADER) == 'Детали ингредиента'
+        ingredient_popup_header_text = main_page.get_ingredient_popup_header_text()
+        
+        assert ingredient_popup_header_text == 'Детали ингредиента'
 
 
     @allure.title('Всплывающее окно с информацией о булке закрывается кликом по крестику')
@@ -66,7 +68,7 @@ class TestMainPage:
         main_page.click_first_buns_open()
         main_page.click_close_ingredient_popup_button()
 
-        assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
+        assert not main_page.is_ingredient_popup_header_displayed(), "Попап не закрылся"
 
 
     @allure.title('Всплывающее окно с информацией о соусе закрывается кликом по крестику')
@@ -77,7 +79,7 @@ class TestMainPage:
         main_page.click_first_sauces_open()
         main_page.click_close_ingredient_popup_button()
 
-        assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
+        assert not main_page.is_ingredient_popup_header_displayed(), "Попап не закрылся"
 
 
 
@@ -89,7 +91,7 @@ class TestMainPage:
         main_page.click_first_fillings_open()
         main_page.click_close_ingredient_popup_button()
 
-        assert not main_page.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER), "Попап не закрылся"
+        assert not main_page.is_ingredient_popup_header_displayed(), "Попап не закрылся"
 
 
     @allure.title('Добавление булки в бургер увеличивает счетчик')
@@ -97,9 +99,9 @@ class TestMainPage:
     def test_add_bun_increase_counter(self, main_page):
 
         main_page.open()
-        initial_counter = main_page.get_counter_value(MainLocators.FIRST_BUNS_COUNTER)
+        initial_counter = main_page.get_first_bun_counter()
         main_page.add_bun_to_burger()
-        new_counter = main_page.get_counter_value(MainLocators.FIRST_BUNS_COUNTER)
+        new_counter = main_page.get_first_bun_counter()
         
         assert new_counter == initial_counter + 2, "Счетчик не увеличился"
 
@@ -110,9 +112,9 @@ class TestMainPage:
 
         main_page.open()
         main_page.click_sauces_button()
-        initial_counter = main_page.get_counter_value(MainLocators.FIRST_SAUCES_COUNTER)
+        initial_counter = main_page.get_first_sauce_counter()
         main_page.add_sauce_to_burger()
-        new_counter = main_page.get_counter_value(MainLocators.FIRST_SAUCES_COUNTER)
+        new_counter = main_page.get_first_sauce_counter()
         
         assert new_counter == initial_counter + 1, "Счетчик не увеличился"
 
@@ -123,9 +125,9 @@ class TestMainPage:
 
         main_page.open()
         main_page.click_fillings_button()
-        initial_counter = main_page.get_counter_value(MainLocators.FIRST_FILLINGS_COUNTER)
+        initial_counter = main_page.get_first_filling_counter()
         main_page.add_filling_to_burger()
-        new_counter = main_page.get_counter_value(MainLocators.FIRST_FILLINGS_COUNTER)
+        new_counter = main_page.get_first_filling_counter()
         
         assert new_counter == initial_counter + 1, "Счетчик не увеличился"
 

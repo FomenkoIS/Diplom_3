@@ -68,7 +68,7 @@ class BasePage:
     def scroll_to_element(self, locator, timeout=TIMEOUT):
         element = self._wait_for_element(locator)
         self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
-        time.sleep(0.5)
+
         return element
 
     @allure.step('Ожидание исчезновения элемента с локатором {locator}')
@@ -134,4 +134,4 @@ class BasePage:
             source.dispatchEvent(createEvent('mouseup', targetX, targetY));
         """
         self.driver.execute_script(script, source, target)
-        time.sleep(2)
+        

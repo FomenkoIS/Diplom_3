@@ -2,9 +2,10 @@ import allure
 from pages.base_page import BasePage
 from url import MAIN_URL
 from locators.main_page_locators import MainLocators
+from locators.order_page_locators import OrderLocators
 from selenium.webdriver.common.action_chains import ActionChains
 from data import UserForLogin
-import time
+
 
 class MainPage(BasePage):
     URL = MAIN_URL
@@ -33,14 +34,14 @@ class MainPage(BasePage):
 
         self.click_element(MainLocators.SAUCES_BUTTON)
         self._wait_for_element(MainLocators.SAUCES_HEADER)
-        time.sleep(0.5)
+        
 
     @allure.step('Клик по кнопке Начинки и переход на вкладку Начинки в конструкторе')
     def click_fillings_button(self):
     
         self.click_element(MainLocators.FILLINGS_BUTTON)
         self._wait_for_element(MainLocators.FILLINGS_HEADER)
-        time.sleep(0.5)
+        
 
 
     @allure.step('Клик по 1-ой булке в разделе Булки (открыть попап)')
@@ -61,7 +62,7 @@ class MainPage(BasePage):
     def click_first_sauces_open(self):
 
 
-        self.scroll_to_element(MainLocators.FIRST_FILLINGS_INGREDIENT)
+        self.scroll_to_element(MainLocators.FIRST_SAUCES_INGREDIENT)
         self.click_element(MainLocators.FIRST_SAUCES_INGREDIENT)
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER)
 
@@ -101,7 +102,7 @@ class MainPage(BasePage):
             MainLocators.FIRST_BUNS_INGREDIENT,
             MainLocators.CONSTRUCTOR_OF_BURGER
         )
-        time.sleep(0.5)
+        
 
 
     @allure.step('Добавляем соус в бургер')
@@ -112,7 +113,7 @@ class MainPage(BasePage):
             MainLocators.FIRST_SAUCES_INGREDIENT,
             MainLocators.CONSTRUCTOR_OF_BURGER
         )
-        time.sleep(0.5)
+        
 
 
     @allure.step('Добавляем начинку в бургер')
@@ -123,7 +124,7 @@ class MainPage(BasePage):
             MainLocators.FIRST_FILLINGS_INGREDIENT,
             MainLocators.CONSTRUCTOR_OF_BURGER
         )
-        time.sleep(0.5)
+        
 
     @allure.step('Получение значения счетчика ингредиента')
     def get_counter_value(self, counter_locator):
@@ -163,4 +164,34 @@ class MainPage(BasePage):
         self.send_keys_to_element(MainLocators.EMAIL_FIELD, email)
         self.send_keys_to_element(MainLocators.PASSWORD_FIELD, password)
         self.click_element(MainLocators.ENTER_BUTTON)
-        self._wait_for_element(MainLocators.MAIN_HEADER)        
+        self._wait_for_element(MainLocators.MAIN_HEADER)
+
+
+    @allure.step("Получить текст заголовка страницы Конструктор")
+    def get_main_header_text(self):
+        return self.get_text_from_element(MainLocators.MAIN_HEADER)
+
+
+    @allure.step("Получить текст заголовка страницы Лента заказов")
+    def get_order_header_text(self):
+        return self.get_text_from_element(OrderLocators.ORDER_HEADER)
+
+    @allure.step("Получить текст заголовка попапа с информацией об ингредиенте")
+    def get_ingredient_popup_header_text(self):
+        return self.get_text_from_element(MainLocators.INGREDIENT_POPUP_HEADER)
+
+    @allure.step('Проверить отображение заголовка попапа ингредиента')
+    def is_ingredient_popup_header_displayed(self):
+        return self.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER)
+
+    @allure.step('Получение счетчика первой булки')
+    def get_first_bun_counter(self):
+        return self.get_counter_value(MainLocators.FIRST_BUNS_COUNTER)
+
+    @allure.step('Получение счетчика первого соуса')
+    def get_first_sauce_counter(self):
+        return self.get_counter_value(MainLocators.FIRST_SAUCES_COUNTER)
+
+    @allure.step('Получение счетчика первой начинки')
+    def get_first_filling_counter(self):
+        return self.get_counter_value(MainLocators.FIRST_FILLINGS_COUNTER)
