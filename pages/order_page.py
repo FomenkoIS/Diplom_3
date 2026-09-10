@@ -3,7 +3,7 @@ from pages.base_page import BasePage
 from url import LIST_ORDER_URL
 from locators.order_page_locators import OrderLocators
 
-from selenium.webdriver.common.by import By
+
 
 class OrderPage(BasePage):
 
@@ -26,8 +26,7 @@ class OrderPage(BasePage):
     
         return self.get_text_from_element(OrderLocators.AT_WORK)
 
-    @allure.step('Ожидание исчезновения текста Все текущие заказы готовы!')
-    def wait_for_orders_ready_to_disappear(self, timeout=20):
 
-        self._wait_for_element_disappear(OrderLocators.ALL_ORDERS_COMPLETED, timeout)
-        self._wait_for_element(OrderLocators.AT_WORK)
+    @allure.step('Ожидание появления заказа в разделе "В работе"')
+    def wait_for_order_in_at_work(self, order_number, timeout=20):
+        return self._wait_for_text_in_element(OrderLocators.AT_WORK, order_number, timeout)

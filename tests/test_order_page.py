@@ -1,5 +1,5 @@
 import allure
-import time
+
 
 class TestOrderPage:
 
@@ -50,8 +50,7 @@ class TestOrderPage:
         new_order_number = str(main_page.create_order_and_get_number())
         
         main_page.click_list_orders_button()
-        order_page.wait_for_orders_ready_to_disappear()
-        time.sleep(5)
+        order_page.wait_for_order_in_at_work(new_order_number )
         order_number_in_at_work = order_page.get_number_of_order_at_work()
         
         assert new_order_number in order_number_in_at_work, 'Номера сделанного заказа нет в разделе В работе'

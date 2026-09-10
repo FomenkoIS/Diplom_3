@@ -3,7 +3,6 @@ from pages.base_page import BasePage
 from url import MAIN_URL
 from locators.main_page_locators import MainLocators
 from locators.order_page_locators import OrderLocators
-from selenium.webdriver.common.action_chains import ActionChains
 from data import UserForLogin
 
 
@@ -21,12 +20,6 @@ class MainPage(BasePage):
         if self.is_element_displayed(MainLocators.INGREDIENT_POPUP_HEADER, timeout=2):
             self.click_close_ingredient_popup_button()
         self.click_element(MainLocators.LIST_ORDERS_BUTTON)
-
-
-    @allure.step('Клик по кнопке Личный кабинет в шапке')
-    def click_personal_account_button(self):
-
-        self.click_element(MainLocators.PERSONAL_ACCOUNT_BUTTON)
 
 
     @allure.step('Клик по кнопке Соусы и переход на вкладку Соусы в конструкторе')
@@ -52,11 +45,6 @@ class MainPage(BasePage):
         self.click_element(MainLocators.FIRST_BUNS_INGREDIENT)
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER)
 
-    @allure.step('Клик по 1-ой булке в разделе Булки (открыть и закрыть попап)')
-    def click_first_buns(self):
-
-        self.click_first_buns_open()
-        self.click_close_ingredient_popup_button()
 
     @allure.step('Клик по 1-му соусу в разделе Соусы (только открыть)')
     def click_first_sauces_open(self):
@@ -66,12 +54,6 @@ class MainPage(BasePage):
         self.click_element(MainLocators.FIRST_SAUCES_INGREDIENT)
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER)
 
-    @allure.step('Клик по 1-му соусу в разделе Соусы (открыть и закрыть)')
-    def click_first_sauces(self):
-
-        self.click_first_sauces_open()
-        self.click_close_ingredient_popup_button()
-        
 
     @allure.step('Клик по 1-ой начинке в разделе Начинки (только открыть)')
     def click_first_fillings_open(self):
@@ -80,11 +62,6 @@ class MainPage(BasePage):
         self.click_element(MainLocators.FIRST_FILLINGS_INGREDIENT)
         self._wait_for_element(MainLocators.INGREDIENT_POPUP_HEADER)
 
-    @allure.step('Клик по 1-ой начинке в разделе Начинки (открыть и закрыть)')
-    def click_first_fillings(self):
-
-        self.click_first_fillings_open()
-        self.click_close_ingredient_popup_button()
 
     @allure.step('Клик по крестику попапа с информацией об ингредиенте')
     def click_close_ingredient_popup_button(self):
